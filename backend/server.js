@@ -10,11 +10,12 @@ import uploadRoute from './routes/uploadRoute';
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose
-  .connect(mongodbUrl)
-  .then(() => {
-    console.log('Connected to MongoDB.');
+  .connect(mongodbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
   })
-  .catch((error) => console.log(error));
+  .catch((error) => console.log(error.reason));
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,5 +33,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(config.PORT, () => {
-  console.log(`Server started at http://localhost:${config.PORT}`);
+  console.log('Server started at http://localhost:5000');
 });
